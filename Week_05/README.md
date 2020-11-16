@@ -4,6 +4,17 @@
 
 
 
+## 文件夹说明
+
+- school-spring-boot-starter
+  - 一个单独的spring boot项目，自定义实现的spring-boot-starter。
+- all-in-one-homework
+  - 一个单独的maven项目，多数作业的代码都在这里，包括测试用的代码
+- test-school-starter
+  - 一开始用来测试school-spring-boot-starter的项目，无视即可。
+
+
+
 ## 必做题目
 
 1. 写代码实现 Spring Bean 的装配，方式越多越好（XML、Annotation 都可以）, 提交到 Github。
