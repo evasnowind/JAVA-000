@@ -10,9 +10,9 @@
 - 使用JDBC PrepareStatement(Batch方式，并打开mysql批量功能)
     - 参见TestBatchInsert#testJdbcPrepareBatchInsertWithRewrite()
 - mysql存储过程
-    - 参见resources/
+    - 参见resources/batchinsert_procedure.sql
 
-目前还有问题、没来得及完善的代码：
+目前尚未完成、打算后续再试试的方案：
 - [ ] 使用Hikari线程池+JDBC Statement(Batch方式)  
 - [ ] 使用Hikari线程池+JDBC PrepareStatement(Batch方式)  
 
@@ -81,4 +81,11 @@ Query OK, 0 rows affected (22.27 sec)
 
 为避免相互干扰，TestBatchInsert在每次运行单个测试时，会运行`init()`方法将删掉已有的`mall_db_test.oms_order`、创建一个空表。
 
+## 问题与解决  
+
+测试不同方案时，遇到的一个问题是直接使用PrepareStatement、Batch时，消耗时间非常大，参见`Java程序测试`中B组测试结果，搜索后发现是由于mysql服务器默认没有打开批量功能，因此在一开始连接mysql数据库时，数据库连接URL加入`?useServerPrepStmts=false&rewriteBatchedStatements=true`，表示：
+>rewriteBatchedStatements=true，mysql默认关闭了batch处理，通过此参数进行打开，这个参数可以重写向数据库提交的SQL语句，具体参见：http://www.cnblogs.com/chenjianjx/archive/2012/08/14/2637914.html
+  useServerPrepStmts=false，如果不开启(useServerPrepStmts=false)，使用com.mysql.jdbc.PreparedStatement进行本地SQL拼装，最后送到db上就是已经替换了?后的最终SQL.
+
+即C组测试结果，可以看到执行效率提高了很多。
 

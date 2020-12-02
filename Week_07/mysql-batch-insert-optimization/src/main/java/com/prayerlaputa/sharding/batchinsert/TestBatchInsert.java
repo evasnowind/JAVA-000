@@ -20,9 +20,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class TestBatchInsert {
 
-
-//    private static final String LOCAL_MYSQL_URL = "jdbc:mysql://62.234.80.253:3306/mall_db_test";
-//    private static final String OPTIMIZED_MYSQL_URL = "jdbc:mysql://62.234.80.253:3306/mall_db_test?useServerPrepStmts=false&rewriteBatchedStatements=true";
     private static final String LOCAL_MYSQL_URL = "jdbc:mysql://localhost:3306/mall_db_test";
     private static final String OPTIMIZED_MYSQL_URL = "jdbc:mysql://localhost:3306/mall_db_test?useServerPrepStmts=false&rewriteBatchedStatements=true";
 

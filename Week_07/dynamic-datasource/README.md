@@ -9,7 +9,7 @@
 - 读写分离，动态切换数据源
 - 支持多个从库的负载均衡
 - 支持配置多个从库
-    - 算是实现一半吧，因为我觉得最好的效果是只需要配好配置文件就多个配好多个从库，目前的话实现是在@Configuration配置类里写死了3个库、每个库的配置从配置文件读取。具体参见`com.prayerlaputa.config.DatasourceConfig`。主要是时间不过用，哎。
+    - 算是实现一半吧，因为我觉得最好的效果是只需要配好配置文件就多个配好多个从库，目前的话实现是在@Configuration配置类里写死了3个库、每个库的配置从配置文件读取。具体参见`com.prayerlaputa.config.DatasourceConfig`。
 
 
 ## 测试验证  

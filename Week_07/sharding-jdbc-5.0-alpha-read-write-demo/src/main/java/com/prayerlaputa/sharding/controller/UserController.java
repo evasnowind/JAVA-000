@@ -2,7 +2,8 @@ package com.prayerlaputa.sharding.controller;
 
 import com.prayerlaputa.sharding.po.User;
 import com.prayerlaputa.sharding.service.UserService;
-import org.apache.shardingsphere.api.hint.HintManager;
+
+import org.apache.shardingsphere.infra.hint.HintManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +17,7 @@ public class UserController {
 	
 	@GetMapping("/users")
 	public Object list() {
-		HintManager.getInstance().setMasterRouteOnly();
+		HintManager.getInstance().setPrimaryRouteOnly();
 		return userService.list();
 	}
 	
@@ -34,7 +35,6 @@ public class UserController {
 	
 	@GetMapping("/users/{id}")
 	public Object get(@PathVariable Long id) {
-		HintManager.getInstance().setMasterRouteOnly();
 		return userService.findById(id);
 	}
 	
