@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.prayerlaputa.sharding.mapper.OrderMapper">
+    
+    <resultMap id="baseResultMap" type="com.prayerlaputa.sharding.model.Order">
+        <result column="id" property="" jdbcType="BIGINT" />
+        <result column="member_id" property="memberId" jdbcType="BIGINT" />
+        <result column="coupon_id" property="couponId" jdbcType="BIGINT" />
+        <result column="order_sn" property="orderSn" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="DATE" />
+        <result column="member_username" property="memberUsername" jdbcType="VARCHAR" />
+        <result column="total_amount" property="totalAmount" jdbcType="DECIMAL" />
+        <result column="pay_amount" property="payAmount" jdbcType="DECIMAL" />
+        <result column="freight_amount" property="freightAmount" jdbcType="DECIMAL" />
+        <result column="promotion_amount" property="promotionAmount" jdbcType="DECIMAL" />
+        <result column="integration_amount" property="integrationAmount" jdbcType="DECIMAL" />
+        <result column="coupon_amount" property="couponAmount" jdbcType="DECIMAL" />
+        <result column="discount_amount" property="discountAmount" jdbcType="DECIMAL" />
+        <result column="pay_type" property="payType" jdbcType="INTEGER" />
+        <result column="source_type" property="sourceType" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="order_type" property="orderType" jdbcType="INTEGER" />
+        <result column="delivery_company" property="deliveryCompany" jdbcType="VARCHAR" />
+        <result column="auto_confirm_day" property="autoConfirmDay" jdbcType="INTEGER" />
+        <result column="integration" property="integration" jdbcType="INTEGER" />
+        <result column="growth" property="growth" jdbcType="INTEGER" />
+        <result column="promotion_info" property="promotionInfo" jdbcType="VARCHAR" />
+        <result column="bill_type" property="billType" jdbcType="INTEGER" />
+        <result column="bill_header" property="billHeader" jdbcType="VARCHAR" />
+        <result column="bill_content" property="billContent" jdbcType="VARCHAR" />
+        <result column="bill_receiver_phone" property="billReceiverPhone" jdbcType="VARCHAR" />
+        <result column="bill_receiver_email" property="billReceiverEmail" jdbcType="VARCHAR" />
+        <result column="receiver_name" property="receiverName" jdbcType="VARCHAR" />
+        <result column="receiver_phone" property="receiverPhone" jdbcType="VARCHAR" />
+        <result column="receiver_post_code" property="receiverPostCode" jdbcType="VARCHAR" />
+        <result column="receiver_province" property="receiverProvince" jdbcType="VARCHAR" />
+        <result column="receiver_city" property="receiverCity" jdbcType="VARCHAR" />
+        <result column="receiver_region" property="receiverRegion" jdbcType="VARCHAR" />
+        <result column="receiver_detail_address" property="receiverDetailAddress" jdbcType="VARCHAR" />
+        <result column="note" property="note" jdbcType="VARCHAR" />
+        <result column="confirm_status" property="confirmStatus" jdbcType="INTEGER" />
+        <result column="delete_status" property="deleteStatus" jdbcType="INTEGER" />
+        <result column="use_integration" property="useIntegration" jdbcType="INTEGER" />
+        <result column="payment_time" property="paymentTime" jdbcType="DATE" />
+        <result column="delivery_time" property="deliveryTime" jdbcType="DATE" />
+        <result column="receive_time" property="receiveTime" jdbcType="DATE" />
+        <result column="comment_time" property="commentTime" jdbcType="DATE" />
+        <result column="modify_time" property="modifyTime" jdbcType="DATE" />
+    </resultMap>
+    
+    <insert id="addUser">
+        INSERT INTO user (
+           city, name
+        )
+        VALUES (
+        #{city,jdbcType=VARCHAR},
+        #{name,jdbcType=VARCHAR}
+        )
+    </insert>
+   
+    <select id="list" resultMap="baseResultMap">
+        SELECT u.* FROM user u
+    </select>
+	
+	<select id="findById" resultMap="baseResultMap">
+        SELECT u.* FROM user u WHERE u.id=#{id,jdbcType=INTEGER}
+    </select>
+    
+    <select id="findByName" resultMap="baseResultMap">
+        SELECT u.* FROM user u WHERE u.name=#{name,jdbcType=VARCHAR}
+    </select>
+    
+</mapper>
