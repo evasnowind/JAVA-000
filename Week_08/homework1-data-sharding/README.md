@@ -42,7 +42,14 @@
     - http://localhost:8084/api/order/update/amount?memberId=52&orderId=543033990689325057&amount=1023.11
 - 删除某个订单
     - http://localhost:8084/api/order/delete?memberId=52&orderId=543033990689325057
-    
+
+## 问题  
+
+遇到一个比较奇怪的问题，实在没时间深入看：
+手工通过上面URL，测试单个增删查改操作时，没有问题，但通过sb连续压测（其实只是想连续多次执行），遇到这个帖子中的问题：
+[ShardingSphere报Sharding value must implements Comparable.的解决过程](https://blog.csdn.net/qiaoqiyu6416/article/details/107044664)
+
+希望有时间再深入研究下这个问题吧，本周作业先这样，本周实在太赶了，有时间的话我觉得还是先去复习比较好，先这样。
 
 ## 附录：订单表SCHEMA
 ```
