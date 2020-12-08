@@ -10,8 +10,41 @@
 本次创建2个库、每个库16个订单。分库时使用用户id % 2取余，订单id % 16取余即可。
 
 
+## 程序说明   
 
-## 订单表SCHEMA
+### 启动准备  
+
+准备数据库、表，目前配置文件里配置的是：
+- 两个库，分别是order_0, order_1
+- 每个库16张表，分别是oms_order_0, oms_order_1, ......, oms_order_15
+- 订单的主键id字段采用snowflake生成
+
+批量创建库的脚本参见[batch_create_table_script.md](src/main/resources/script/batch_create_table_script.md)， 该脚本每次可以创建一个数据库、并在库中批量创建相同前缀的表。
+
+也可以直接导入已生成好的SQL，参见`src/main/resources/script/order_0.sql` `src/main/resources/script/order_1.sql` 
+
+### 测试  
+
+准备好数据库后，修改配置文件中的数据库连接地址，然后启动ShardingDbTableReadWriteApplication.java。  
+目前使用spring boot写了CRUD接口，方便起见，接口都采用了GET请求方式、且很多参数都直接写死了，毕竟我们的目的是联系sharding-jdbc分库分表的使用。
+
+已完成的接口如下：
+
+- 插入数据
+    - 示例：http://localhost:8084/api/order/add?username=bbb&memberId=52&payment=100
+- 查询所有订单
+    - 示例：http://localhost:8084/api/order/list
+- 查询某用户的所有订单（按用户id查询）
+    - http://localhost:8084/api/order/listByMemberId?memberId=52
+- 查询单个订单
+    - http://localhost:8084/api/order/get?memberId=52&orderId=543033976919425024
+- 更新某个订单
+    - http://localhost:8084/api/order/update/amount?memberId=52&orderId=543033990689325057&amount=1023.11
+- 删除某个订单
+    - http://localhost:8084/api/order/delete?memberId=52&orderId=543033990689325057
+    
+
+## 附录：订单表SCHEMA
 ```
 CREATE TABLE `oms_order_XX` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键，记录唯一标识',

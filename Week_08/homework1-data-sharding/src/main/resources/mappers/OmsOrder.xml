@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.prayerlaputa.sharding.mapper.OrderMapper">
+<mapper namespace="com.prayerlaputa.sharding.mapper.OmsOrderMapper">
     
-    <resultMap id="baseResultMap" type="com.prayerlaputa.sharding.model.Order">
-        <result column="id" property="" jdbcType="BIGINT" />
+    <resultMap id="baseResultMap" type="com.prayerlaputa.sharding.model.OmsOrder">
+        <result column="id" property="id" jdbcType="BIGINT" />
         <result column="member_id" property="memberId" jdbcType="BIGINT" />
         <result column="coupon_id" property="couponId" jdbcType="BIGINT" />
         <result column="order_sn" property="orderSn" jdbcType="VARCHAR" />
@@ -47,27 +47,75 @@
         <result column="comment_time" property="commentTime" jdbcType="DATE" />
         <result column="modify_time" property="modifyTime" jdbcType="DATE" />
     </resultMap>
-    
-    <insert id="addUser">
-        INSERT INTO user (
-           city, name
+
+
+    <insert id="insertOrder">
+        INSERT INTO oms_order (
+           member_id,
+           coupon_id,
+           order_sn,
+           create_time,
+           member_username,
+           total_amount,
+           pay_amount,
+           freight_amount,
+           promotion_amount,
+           integration_amount,
+           coupon_amount,
+           discount_amount,
+           receiver_name,
+           receiver_phone
         )
         VALUES (
-        #{city,jdbcType=VARCHAR},
-        #{name,jdbcType=VARCHAR}
+        #{memberId,jdbcType=BIGINT},
+        #{couponId,jdbcType=BIGINT},
+        #{orderSn,jdbcType=VARCHAR},
+        #{createTime, jdbcType=DATE},
+        #{memberUsername, jdbcType=VARCHAR},
+        #{totalAmount, jdbcType=DECIMAL},
+        #{payAmount, jdbcType=DECIMAL},
+        #{freightAmount, jdbcType=DECIMAL},
+        #{promotionAmount, jdbcType=DECIMAL},
+        #{integrationAmount, jdbcType=DECIMAL},
+        #{couponAmount, jdbcType=DECIMAL},
+        #{discountAmount, jdbcType=DECIMAL},
+        #{receiverName, jdbcType=VARCHAR},
+        #{receiverPhone, jdbcType=VARCHAR}
         )
     </insert>
-   
-    <select id="list" resultMap="baseResultMap">
-        SELECT u.* FROM user u
+
+
+    <select id="listAll" resultMap="baseResultMap">
+        SELECT o.* FROM oms_order o
     </select>
-	
-	<select id="findById" resultMap="baseResultMap">
-        SELECT u.* FROM user u WHERE u.id=#{id,jdbcType=INTEGER}
+
+    <select id="listByMemberId" resultMap="baseResultMap">
+        SELECT o.* FROM oms_order o
+        WHERE o.member_id=#{memberId,jdbcType=BIGINT}
     </select>
-    
-    <select id="findByName" resultMap="baseResultMap">
-        SELECT u.* FROM user u WHERE u.name=#{name,jdbcType=VARCHAR}
+
+    <select id="getById" resultMap="baseResultMap">
+        SELECT o.* FROM oms_order o
+        WHERE o.id= #{orderId,jdbcType=BIGINT} AND o.member_id=#{memberId,jdbcType=BIGINT}
     </select>
-    
+
+
+    <delete id="deleteById">
+        DELETE FROM oms_order WHERE id= #{orderId,jdbcType=BIGINT} AND member_id=#{memberId,jdbcType=BIGINT}
+    </delete>
+
+    <update id="updateById">
+        UPDATE oms_order
+        <set>
+
+            <if test="payAmount != null" >
+                pay_amount=#{payAmount, jdbcType=DECIMAL},
+            </if>
+            <if test="totalAmount != null">
+                total_amount=#{totalAmount, jdbcType=DECIMAL}
+            </if>
+        </set>
+            WHERE member_id=#{memberId,jdbcType=BIGINT} AND id=#{id,jdbcType=BIGINT}
+    </update>
+
 </mapper>

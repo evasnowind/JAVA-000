@@ -1,34 +1,50 @@
 package com.prayerlaputa.sharding.service;
 
-import com.prayerlaputa.sharding.mapper.OrderMapper;
-import com.prayerlaputa.sharding.model.Order;
+import com.prayerlaputa.sharding.mapper.OmsOrderMapper;
+import com.prayerlaputa.sharding.model.OmsOrder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author chenglong.yu
  * created on 2020/12/7
  */
+@Slf4j
 @Service
 public class OrderService {
 
     @Autowired
-    private OrderMapper orderMapper;
+    private OmsOrderMapper omsOrderMapper;
 
-    public void insertOrder(Order order) {
-
+    public Long insertOrder(OmsOrder omsOrder) {
+        return omsOrderMapper.insertOrder(omsOrder);
     }
 
     public boolean deleteById(Long memberId, Long orderId) {
-        return false;
+         Long deletedCnt = omsOrderMapper.deleteById(memberId, orderId);
+         return null != deletedCnt && deletedCnt > 0 ? true : false;
     }
 
-    public Order getOrderById(Long memberId, Long orderId) {
-        return orderMapper.getById(memberId, orderId);
+    public List<OmsOrder> getAllOrders() {
+        return omsOrderMapper.listAll();
     }
 
-    public boolean updateOrder(Order order) {
-        return false;
+    public OmsOrder getOrderById(Long memberId, Long orderId) {
+        OmsOrder order = omsOrderMapper.getById(memberId, orderId);
+        log.info("getOrderById order={}.", order);
+        return order;
+    }
+
+    public List<OmsOrder> getOrderByMemberId(Long memberId) {
+        return omsOrderMapper.listByMemberId(memberId);
+    }
+
+    public boolean updateOrder(OmsOrder omsOrder) {
+        Long updateCnt = omsOrderMapper.updateById(omsOrder);
+        return null != updateCnt && updateCnt > 0 ? true : false;
     }
 
 }

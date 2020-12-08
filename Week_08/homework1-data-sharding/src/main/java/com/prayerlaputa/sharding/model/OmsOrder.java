@@ -1,6 +1,8 @@
 package com.prayerlaputa.sharding.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -11,7 +13,9 @@ import java.util.Date;
  * created on 2020/12/7
  */
 @Data
-public class Order implements Serializable {
+@AllArgsConstructor
+@NoArgsConstructor
+public class OmsOrder implements Serializable {
 
 
     private static final long serialVersionUID = 1L;
