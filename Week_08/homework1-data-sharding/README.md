@@ -102,3 +102,118 @@ CREATE TABLE `oms_order_XX` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户表'
 ```
 
+## 附录2：我遇到的问题  
+
+问题先记录下，只能有时间再捯饬了~.~
+
+现象：
+浏览器手工访问没问题：
+http://localhost:8084/api/order/add?username=ccc&memberId=100&payment=100
+
+windows 使用sb测试：
+请求：http://localhost:8084/api/order/add?username=ccc&memberId=100&payment=100
+
+将会出现如下异常信息：
+
+```text
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6f53186e] was not registered for synchronization because synchronization is not active
+JDBC Connection [org.apache.shardingsphere.shardingjdbc.jdbc.core.connection.ShardingConnection@1580b619] will not be managed by Spring
+==>  Preparing: INSERT INTO oms_order ( member_id, coupon_id, order_sn, create_time, member_username, total_amount, pay_amount, freight_amount, promotion_amount, integration_amount, coupon_amount, discount_amount, receiver_name, receiver_phone ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ) 
+==> Parameters: null, 6(Long), 4a2f4dea-9790-4ddc-b5b1-033f14d069d4(String), 2020-12-08(Date), ccc(String), null, null, 0(BigDecimal), 0(BigDecimal), 0(BigDecimal), 0(BigDecimal), 0(BigDecimal), ccc(String), 15811111111(String)
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@6f53186e]
+2020-12-08 15:31:49.348 ERROR 30420 --- [io-8084-exec-10] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.exceptions.PersistenceException: 
+### Error updating database.  Cause: java.lang.IllegalArgumentException: Sharding value must implements Comparable.
+### The error may exist in file [D:\GitRepository\JAVA-000\Week_08\homework1-data-sharding\target\classes\mappers\OmsOrder.xml]
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: INSERT INTO oms_order (            member_id,            coupon_id,            order_sn,            create_time,            member_username,            total_amount,            pay_amount,            freight_amount,            promotion_amount,            integration_amount,            coupon_amount,            discount_amount,            receiver_name,            receiver_phone         )         VALUES (         ?,         ?,         ?,         ?,         ?,         ?,         ?,         ?,         ?,         ?,         ?,         ?,         ?,         ?         )
+### Cause: java.lang.IllegalArgumentException: Sharding value must implements Comparable.] with root cause
+
+java.lang.IllegalArgumentException: Sharding value must implements Comparable.
+	at com.google.common.base.Preconditions.checkArgument(Preconditions.java:122) ~[guava-18.0.jar:na]
+	at org.apache.shardingsphere.sharding.route.engine.condition.engine.InsertClauseShardingConditionEngine.getRouteValue(InsertClauseShardingConditionEngine.java:112) ~[sharding-core-route-4.1.1.jar:4.1.1]
+	at org.apache.shardingsphere.sharding.route.engine.condition.engine.InsertClauseShardingConditionEngine.createShardingCondition(InsertClauseShardingConditionEngine.java:94) ~[sharding-core-route-4.1.1.jar:4.1.1]
+	at org.apache.shardingsphere.sharding.route.engine.condition.engine.InsertClauseShardingConditionEngine.createShardingConditions(InsertClauseShardingConditionEngine.java:65) ~[sharding-core-route-4.1.1.jar:4.1.1]
+	at org.apache.shardingsphere.sharding.route.engine.ShardingRouteDecorator.getShardingConditions(ShardingRouteDecorator.java:80) ~[sharding-core-route-4.1.1.jar:4.1.1]
+	at org.apache.shardingsphere.sharding.route.engine.ShardingRouteDecorator.decorate(ShardingRouteDecorator.java:62) ~[sharding-core-route-4.1.1.jar:4.1.1]
+	at org.apache.shardingsphere.sharding.route.engine.ShardingRouteDecorator.decorate(ShardingRouteDecorator.java:53) ~[sharding-core-route-4.1.1.jar:4.1.1]
+	at org.apache.shardingsphere.underlying.route.DataNodeRouter.executeRoute(DataNodeRouter.java:91) ~[shardingsphere-route-4.1.1.jar:4.1.1]
+	at org.apache.shardingsphere.underlying.route.DataNodeRouter.route(DataNodeRouter.java:76) ~[shardingsphere-route-4.1.1.jar:4.1.1]
+	at org.apache.shardingsphere.underlying.pluggble.prepare.PreparedQueryPrepareEngine.route(PreparedQueryPrepareEngine.java:54) ~[shardingsphere-pluggable-4.1.1.jar:4.1.1]
+	at org.apache.shardingsphere.underlying.pluggble.prepare.BasePrepareEngine.executeRoute(BasePrepareEngine.java:96) ~[shardingsphere-pluggable-4.1.1.jar:4.1.1]
+	at org.apache.shardingsphere.underlying.pluggble.prepare.BasePrepareEngine.prepare(BasePrepareEngine.java:83) ~[shardingsphere-pluggable-4.1.1.jar:4.1.1]
+	at org.apache.shardingsphere.shardingjdbc.jdbc.core.statement.ShardingPreparedStatement.prepare(ShardingPreparedStatement.java:183) ~[sharding-jdbc-core-4.1.1.jar:4.1.1]
+	at org.apache.shardingsphere.shardingjdbc.jdbc.core.statement.ShardingPreparedStatement.execute(ShardingPreparedStatement.java:143) ~[sharding-jdbc-core-4.1.1.jar:4.1.1]
+	at sun.reflect.GeneratedMethodAccessor53.invoke(Unknown Source) ~[na:na]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_161]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_161]
+	at org.apache.ibatis.logging.jdbc.PreparedStatementLogger.invoke(PreparedStatementLogger.java:59) ~[mybatis-3.5.1.jar:3.5.1]
+	at com.sun.proxy.$Proxy75.execute(Unknown Source) ~[na:na]
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.update(PreparedStatementHandler.java:47) ~[mybatis-3.5.1.jar:3.5.1]
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.update(RoutingStatementHandler.java:74) ~[mybatis-3.5.1.jar:3.5.1]
+	at org.apache.ibatis.executor.SimpleExecutor.doUpdate(SimpleExecutor.java:50) ~[mybatis-3.5.1.jar:3.5.1]
+	at org.apache.ibatis.executor.BaseExecutor.update(BaseExecutor.java:117) ~[mybatis-3.5.1.jar:3.5.1]
+	at org.apache.ibatis.executor.CachingExecutor.update(CachingExecutor.java:76) ~[mybatis-3.5.1.jar:3.5.1]
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.update(DefaultSqlSession.java:197) ~[mybatis-3.5.1.jar:3.5.1]
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.insert(DefaultSqlSession.java:184) ~[mybatis-3.5.1.jar:3.5.1]
+	at sun.reflect.GeneratedMethodAccessor36.invoke(Unknown Source) ~[na:na]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_161]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_161]
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:433) ~[mybatis-spring-2.0.1.jar:2.0.1]
+	at com.sun.proxy.$Proxy68.insert(Unknown Source) ~[na:na]
+	at org.mybatis.spring.SqlSessionTemplate.insert(SqlSessionTemplate.java:278) ~[mybatis-spring-2.0.1.jar:2.0.1]
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:62) ~[mybatis-3.5.1.jar:3.5.1]
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:58) ~[mybatis-3.5.1.jar:3.5.1]
+	at com.sun.proxy.$Proxy69.insertOrder(Unknown Source) ~[na:na]
+	at com.prayerlaputa.sharding.service.OrderService.insertOrder(OrderService.java:23) ~[classes/:na]
+	at com.prayerlaputa.sharding.controller.OrderController.insertOrder(OrderController.java:50) ~[classes/:na]
+	at sun.reflect.GeneratedMethodAccessor35.invoke(Unknown Source) ~[na:na]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_161]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_161]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:190) ~[spring-web-5.2.5.RELEASE.jar:5.2.5.RELEASE]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:138) ~[spring-web-5.2.5.RELEASE.jar:5.2.5.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:105) ~[spring-webmvc-5.2.5.RELEASE.jar:5.2.5.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:879) ~[spring-webmvc-5.2.5.RELEASE.jar:5.2.5.RELEASE]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:793) ~[spring-webmvc-5.2.5.RELEASE.jar:5.2.5.RELEASE]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.2.5.RELEASE.jar:5.2.5.RELEASE]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1040) ~[spring-webmvc-5.2.5.RELEASE.jar:5.2.5.RELEASE]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:943) ~[spring-webmvc-5.2.5.RELEASE.jar:5.2.5.RELEASE]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.2.5.RELEASE.jar:5.2.5.RELEASE]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898) ~[spring-webmvc-5.2.5.RELEASE.jar:5.2.5.RELEASE]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:634) ~[tomcat-embed-core-9.0.33.jar:9.0.33]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883) ~[spring-webmvc-5.2.5.RELEASE.jar:5.2.5.RELEASE]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741) ~[tomcat-embed-core-9.0.33.jar:9.0.33]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231) ~[tomcat-embed-core-9.0.33.jar:9.0.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.33.jar:9.0.33]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.33.jar:9.0.33]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.33.jar:9.0.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.33.jar:9.0.33]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.2.5.RELEASE.jar:5.2.5.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.2.5.RELEASE.jar:5.2.5.RELEASE]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.33.jar:9.0.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.33.jar:9.0.33]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.2.5.RELEASE.jar:5.2.5.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.2.5.RELEASE.jar:5.2.5.RELEASE]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.33.jar:9.0.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.33.jar:9.0.33]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.2.5.RELEASE.jar:5.2.5.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119) ~[spring-web-5.2.5.RELEASE.jar:5.2.5.RELEASE]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-9.0.33.jar:9.0.33]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) ~[tomcat-embed-core-9.0.33.jar:9.0.33]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202) ~[tomcat-embed-core-9.0.33.jar:9.0.33]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96) [tomcat-embed-core-9.0.33.jar:9.0.33]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541) [tomcat-embed-core-9.0.33.jar:9.0.33]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:139) [tomcat-embed-core-9.0.33.jar:9.0.33]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) [tomcat-embed-core-9.0.33.jar:9.0.33]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) [tomcat-embed-core-9.0.33.jar:9.0.33]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343) [tomcat-embed-core-9.0.33.jar:9.0.33]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:373) [tomcat-embed-core-9.0.33.jar:9.0.33]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) [tomcat-embed-core-9.0.33.jar:9.0.33]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868) [tomcat-embed-core-9.0.33.jar:9.0.33]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1594) [tomcat-embed-core-9.0.33.jar:9.0.33]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) [tomcat-embed-core-9.0.33.jar:9.0.33]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_161]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_161]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-embed-core-9.0.33.jar:9.0.33]
+```
