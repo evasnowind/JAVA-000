@@ -11,6 +11,7 @@
     <modules>
         <module>homework1-data-sharding</module>
         <module>homework2-option-seata</module>
+        <module>homework2-shardingsphere-atomikos-xa</module>
     </modules>
 
 
