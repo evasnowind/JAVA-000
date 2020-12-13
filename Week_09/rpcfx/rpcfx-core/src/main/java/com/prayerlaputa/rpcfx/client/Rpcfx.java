@@ -5,6 +5,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.prayerlaputa.rpcfx.api.RpcfxRequest;
 import com.prayerlaputa.rpcfx.api.RpcfxResponse;
+import com.prayerlaputa.rpcfx.client.proxy.ByteBuddyProxyFactory;
+import com.prayerlaputa.rpcfx.common.RpcException;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -20,23 +22,35 @@ import java.lang.reflect.Proxy;
  * 生成代理对象
  * 常见方式：
  * 1. 动态代理
- * 2. AOP
- * 3. 字节码生成
+ * 2. AOP(字节码生成)
  *
  */
 public final class Rpcfx {
+
+
 
     static {
         ParserConfig.getGlobalInstance().addAccept("com.prayerlaputa");
     }
 
-    public static <T> T create(final Class<T> serviceClass, final String url) {
 
+    public static <T> T create(final Class<T> serviceClass, final String url) {
         // 0. 替换动态代理 -> AOP
-        return (T) Proxy.newProxyInstance(Rpcfx.class.getClassLoader(), new Class[]{serviceClass}, new RpcfxInvocationHandler(serviceClass, url));
+        T proxy = null;
+
+        try {
+            ByteBuddyProxyFactory proxyFactory = new ByteBuddyProxyFactory();
+            proxy = proxyFactory.createProxy(serviceClass, url);
+        } catch (RpcException e) {
+            e.printStackTrace();
+        }
+        return proxy;
+
+//        // 0. 替换动态代理 -> AOP
+//        return (T) Proxy.newProxyInstance(Rpcfx.class.getClassLoader(), new Class[]{serviceClass}, new RpcfxInvocationHandler(serviceClass, url));
 
     }
-
+    
     public static class RpcfxInvocationHandler implements InvocationHandler {
 
         public static final MediaType JSONTYPE = MediaType.get("application/json; charset=utf-8");
@@ -47,10 +61,6 @@ public final class Rpcfx {
             this.serviceClass = serviceClass;
             this.url = url;
         }
-
-        // 可以尝试，自己去写对象序列化，二进制还是文本的，，，rpcfx是xml自定义序列化、反序列化，json: code.google.com/p/rpcfx
-        // int byte char float double long bool
-        // [], data class
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] params) throws Throwable {
