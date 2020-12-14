@@ -1,4 +1,4 @@
-package com.prayerlaputa.rpcfx.provider;
+package com.prayerlaputa.rpcfx.provider.service;
 
 import com.prayerlaputa.rpcfx.api.Order;
 import com.prayerlaputa.rpcfx.api.OrderService;

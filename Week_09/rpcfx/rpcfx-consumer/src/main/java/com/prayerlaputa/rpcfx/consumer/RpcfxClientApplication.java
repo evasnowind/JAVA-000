@@ -13,7 +13,6 @@ public class RpcfxClientApplication {
 	// 二方库
 	// 三方库 lib
 	// nexus, userserivce -> userdao -> user
-	//
 
 	public static void main(String[] args) {
 

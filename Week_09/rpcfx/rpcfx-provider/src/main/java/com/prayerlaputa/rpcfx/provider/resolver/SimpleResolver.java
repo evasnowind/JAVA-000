@@ -1,10 +1,10 @@
-package com.prayerlaputa.rpcfx.provider;
+package com.prayerlaputa.rpcfx.provider.resolver;
 
 import com.prayerlaputa.rpcfx.api.RpcfxResolver;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
-public class DemoResolver implements RpcfxResolver, ApplicationContextAware {
+public class SimpleResolver implements RpcfxResolver, ApplicationContextAware {
 
     private ApplicationContext applicationContext;
 
