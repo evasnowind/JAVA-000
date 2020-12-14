@@ -1,7 +1,7 @@
 package com.prayerlaputa.rpcfx.proxy;
 
-import com.prayerlaputa.rpcfx.client.proxy.ByteBuddyProxyFactory;
-import com.prayerlaputa.rpcfx.common.RpcException;
+import com.prayerlaputa.rpcfx.client.proxy.factory.ByteBuddyAbstractProxyFactory;
+import com.prayerlaputa.rpcfx.common.RpcfxException;
 
 /**
  * @author chenglong.yu
@@ -11,12 +11,12 @@ public class TestByteBuddyProxyFactory {
 
 
     public static void main(String[] args) {
-        ByteBuddyProxyFactory factory = new ByteBuddyProxyFactory();
+        ByteBuddyAbstractProxyFactory factory = new ByteBuddyAbstractProxyFactory();
         try {
             HelloService service = factory.createProxy(HelloService.class, "http://www.baidu.com");
             String res = service.sayHello("hello world!");
             System.out.println(res);
-        } catch (RpcException e) {
+        } catch (RpcfxException e) {
             e.printStackTrace();
         }
     }
