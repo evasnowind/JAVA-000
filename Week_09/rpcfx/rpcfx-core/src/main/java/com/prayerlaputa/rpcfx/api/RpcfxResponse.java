@@ -1,12 +1,14 @@
 package com.prayerlaputa.rpcfx.api;
 
+import com.prayerlaputa.rpcfx.common.RpcfxException;
+
 public class RpcfxResponse {
 
     private Object result;
 
     private boolean status;
 
-    private Exception exception;
+    private RpcfxException exception;
 
     public Object getResult() {
         return result;
@@ -24,11 +26,11 @@ public class RpcfxResponse {
         this.status = status;
     }
 
-    public Exception getException() {
+    public RpcfxException getRpcfxException() {
         return exception;
     }
 
-    public void setException(Exception exception) {
+    public void setRpcfxException(RpcfxException exception) {
         this.exception = exception;
     }
 }

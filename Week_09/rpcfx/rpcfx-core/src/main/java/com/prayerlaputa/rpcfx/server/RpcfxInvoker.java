@@ -5,6 +5,8 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.prayerlaputa.rpcfx.api.RpcfxRequest;
 import com.prayerlaputa.rpcfx.api.RpcfxResolver;
 import com.prayerlaputa.rpcfx.api.RpcfxResponse;
+import com.prayerlaputa.rpcfx.common.RpcfxException;
+import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -27,6 +29,7 @@ import java.util.Arrays;
  * 3. 发起请求、重试
  *  3.1 底层请求的处理，序列化（dubbo protocol, exchange, transport, serialize）
  */
+@Slf4j
 public class RpcfxInvoker {
 
     private RpcfxResolver resolver;
@@ -50,13 +53,12 @@ public class RpcfxInvoker {
             response.setStatus(true);
             return response;
         } catch ( IllegalAccessException | InvocationTargetException e) {
-
             // 3.Xstream
 
             // 2.封装一个统一的RpcfxException
             // 客户端也需要判断异常
-            e.printStackTrace();
-            response.setException(e);
+            log.error("[invoke] error:", e);
+            response.setRpcfxException(new RpcfxException(e));
             response.setStatus(false);
             return response;
         }
