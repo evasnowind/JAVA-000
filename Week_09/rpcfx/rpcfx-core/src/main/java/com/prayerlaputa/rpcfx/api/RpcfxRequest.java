@@ -5,14 +5,9 @@ import lombok.Data;
 @Data
 public class RpcfxRequest<T> {
 
-  private Class<T> serviceClass;
+    private Class<T> serviceClass;
 
-  private String method;
+    private String method;
 
-  private Object[] params;
-
-    public Class<T> getServiceClass() {
-        return serviceClass;
-    }
-
+    private Object[] params;
 }

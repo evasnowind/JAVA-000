@@ -58,7 +58,7 @@ public class RpcfxInvoker {
             // 2.封装一个统一的RpcfxException
             // 客户端也需要判断异常
             log.error("[invoke] error:", e);
-            response.setRpcfxException(new RpcfxException(e));
+            response.setException(new RpcfxException(e));
             response.setStatus(false);
             return response;
         }
