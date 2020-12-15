@@ -30,12 +30,12 @@ public class BeanConfig {
 
     // 能否去掉name
     //
-    @Bean(name = "com.prayerlaputa.rpcfx.api.UserService")
+    @Bean
     public UserService createUserService(){
         return new UserServiceImpl();
     }
 
-    @Bean(name = "com.prayerlaputa.rpcfx.api.OrderService")
+    @Bean
     public OrderService createOrderService(){
         return new OrderServiceImpl();
     }

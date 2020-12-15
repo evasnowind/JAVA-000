@@ -51,7 +51,7 @@ public class RemoteCallAdvisor {
                                   @AllArguments @RuntimeType Object[] args) throws RpcfxException {
 
         RpcfxRequest request = new RpcfxRequest();
-        request.setServiceClass(this.serviceClass.getName());
+        request.setServiceClass(this.serviceClass);
         request.setMethod(method.getName());
         request.setParams(args);
 

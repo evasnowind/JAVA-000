@@ -1,34 +1,18 @@
 package com.prayerlaputa.rpcfx.api;
 
-public class RpcfxRequest {
+import lombok.Data;
 
-  private String serviceClass;
+@Data
+public class RpcfxRequest<T> {
+
+  private Class<T> serviceClass;
 
   private String method;
 
   private Object[] params;
 
-    public String getServiceClass() {
+    public Class<T> getServiceClass() {
         return serviceClass;
     }
 
-    public void setServiceClass(String serviceClass) {
-        this.serviceClass = serviceClass;
-    }
-
-    public String getMethod() {
-        return method;
-    }
-
-    public void setMethod(String method) {
-        this.method = method;
-    }
-
-    public Object[] getParams() {
-        return params;
-    }
-
-    public void setParams(Object[] params) {
-        this.params = params;
-    }
 }

@@ -14,7 +14,7 @@ public class SimpleResolver implements RpcfxResolver, ApplicationContextAware {
     }
 
     @Override
-    public Object resolve(String serviceClass) {
+    public <T> T resolve(Class<T> serviceClass) {
         return this.applicationContext.getBean(serviceClass);
     }
 }

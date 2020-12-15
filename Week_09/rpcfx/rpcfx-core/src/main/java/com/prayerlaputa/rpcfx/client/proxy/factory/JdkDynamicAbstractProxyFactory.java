@@ -48,7 +48,7 @@ public class JdkDynamicAbstractProxyFactory extends AbstractProxyFactory {
         @Override
         public Object invoke(Object proxy, Method method, Object[] params) throws Throwable {
             RpcfxRequest request = new RpcfxRequest();
-            request.setServiceClass(this.serviceClass.getName());
+            request.setServiceClass(this.serviceClass);
             request.setMethod(method.getName());
             request.setParams(params);
 

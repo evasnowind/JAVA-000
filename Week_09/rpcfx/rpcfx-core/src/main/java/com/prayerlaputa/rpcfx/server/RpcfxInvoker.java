@@ -40,7 +40,7 @@ public class RpcfxInvoker {
 
     public RpcfxResponse invoke(RpcfxRequest request) {
         RpcfxResponse response = new RpcfxResponse();
-        String serviceClass = request.getServiceClass();
+        Class serviceClass = request.getServiceClass();
 
         // 作业1：改成泛型和反射
         Object service = resolver.resolve(serviceClass);
