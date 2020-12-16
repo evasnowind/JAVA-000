@@ -39,18 +39,21 @@ public class RpcfxInvoker {
     }
 
     public RpcfxResponse invoke(RpcfxRequest request) {
+        
+        Long requestId = request.getRequestId();
+        
         RpcfxResponse response = new RpcfxResponse();
+        response.setRequestId(requestId);
         Class serviceClass = request.getServiceClass();
 
-        // 作业1：改成泛型和反射
         Object service = resolver.resolve(serviceClass);
-
         try {
             Method method = resolveMethodFromClass(service.getClass(), request.getMethod());
             Object result = method.invoke(service, request.getParams()); // dubbo, fastjson,
-            // 两次json序列化能否合并成一个
+
             response.setResult(result);
             response.setStatus(true);
+            System.out.println("response json:" + JSON.toJSONString(response));
             return response;
         } catch ( IllegalAccessException | InvocationTargetException e) {
             // 3.Xstream

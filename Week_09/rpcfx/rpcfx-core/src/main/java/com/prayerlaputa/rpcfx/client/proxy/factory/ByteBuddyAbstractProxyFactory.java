@@ -63,7 +63,7 @@ public class ByteBuddyAbstractProxyFactory extends AbstractProxyFactory {
         T proxy = null;
 
         try {
-            RemoteCallWrapper handler = new RemoteCallWrapper(serviceClass, url, httpclient);
+            RemoteCallWrapper handler = new RemoteCallWrapper(serviceClass, url);
 
             Class<? extends T> cls = new ByteBuddy()
                     .subclass(serviceClass)

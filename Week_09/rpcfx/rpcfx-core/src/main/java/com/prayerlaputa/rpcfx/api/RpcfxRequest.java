@@ -10,4 +10,6 @@ public class RpcfxRequest<T> {
     private String method;
 
     private Object[] params;
+
+    private Long requestId;
 }
