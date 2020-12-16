@@ -1,7 +1,7 @@
 package com.prayerlaputa.rpcfx.client.proxy.factory;
 
 import com.prayerlaputa.rpcfx.client.proxy.ProxyFactoryType;
-import com.prayerlaputa.rpcfx.client.proxy.aop.RemoteCallAdvisor;
+import com.prayerlaputa.rpcfx.client.proxy.wrapper.RemoteCallWrapper;
 import com.prayerlaputa.rpcfx.common.RpcfxException;
 import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.ByteBuddy;
@@ -63,7 +63,7 @@ public class ByteBuddyAbstractProxyFactory extends AbstractProxyFactory {
         T proxy = null;
 
         try {
-            RemoteCallAdvisor handler = new RemoteCallAdvisor(serviceClass, url, httpclient);
+            RemoteCallWrapper handler = new RemoteCallWrapper(serviceClass, url, httpclient);
 
             Class<? extends T> cls = new ByteBuddy()
                     .subclass(serviceClass)

@@ -1,4 +1,4 @@
-package com.prayerlaputa.rpcfx.client.proxy.aop;
+package com.prayerlaputa.rpcfx.client.proxy.wrapper;
 
 import com.alibaba.fastjson.JSON;
 import com.prayerlaputa.rpcfx.api.RpcfxRequest;
@@ -33,13 +33,13 @@ import java.util.concurrent.CountDownLatch;
  * created on 2020/12/13
  */
 @Slf4j
-public class RemoteCallAdvisor {
+public class RemoteCallWrapper {
 
     private final Class<?> serviceClass;
     private final String url;
     private CloseableHttpAsyncClient httpclient;
 
-    public RemoteCallAdvisor(final Class<?> serviceClass, final String url,
+    public RemoteCallWrapper(final Class<?> serviceClass, final String url,
                              final CloseableHttpAsyncClient httpAsyncClient) {
         this.serviceClass = serviceClass;
         this.url = url;
@@ -70,7 +70,7 @@ public class RemoteCallAdvisor {
         // 这里判断response.status，处理异常
         // 考虑封装一个全局的RpcfxException
 
-        return JSON.parse(response.getResult().toString());
+        return response.getResult();
     }
 
 
@@ -120,13 +120,11 @@ public class RemoteCallAdvisor {
             }
         });
 
-        log.info("http countdown lock before....");
         countDownLatch.await();
-        log.info("http countdown lock after");
 
         // 1.可以复用client
         // 2.尝试使用httpclient或者netty client
-        log.info("resp json: " + respJson);
+        System.out.println("resp json: " + respJson);
         return JSON.parseObject(respJson, RpcfxResponse.class);
     }
 

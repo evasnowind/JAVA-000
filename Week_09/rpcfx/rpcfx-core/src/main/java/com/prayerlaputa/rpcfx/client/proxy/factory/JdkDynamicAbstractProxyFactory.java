@@ -57,7 +57,7 @@ public class JdkDynamicAbstractProxyFactory extends AbstractProxyFactory {
             // 这里判断response.status，处理异常
             // 考虑封装一个全局的RpcfxException
 
-            return JSON.parse(response.getResult().toString());
+            return response.getResult();
         }
 
         private RpcfxResponse post(RpcfxRequest req, String url) throws IOException {

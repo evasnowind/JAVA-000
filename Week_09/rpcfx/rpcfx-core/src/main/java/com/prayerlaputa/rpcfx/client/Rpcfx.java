@@ -26,7 +26,8 @@ public final class Rpcfx {
      * 采用了异步httpclient发送请求，用同一个工厂可以复用该工程内的
      * httpclient线程池。
      */
-    static AbstractProxyFactory proxyFactory = FactoryProducer.getFactory(ProxyFactoryType.BYTE_BUDDY);
+    static AbstractProxyFactory proxyFactory = FactoryProducer.getFactory(ProxyFactoryType.JDK_DYNAMIC_PROXY);
+//    static AbstractProxyFactory proxyFactory = FactoryProducer.getFactory(ProxyFactoryType.BYTE_BUDDY);
 
     static {
         ParserConfig.getGlobalInstance().addAccept("com.prayerlaputa");
