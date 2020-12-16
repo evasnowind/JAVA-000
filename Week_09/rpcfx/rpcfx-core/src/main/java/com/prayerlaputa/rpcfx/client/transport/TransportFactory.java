@@ -8,6 +8,8 @@ import org.apache.http.impl.nio.reactor.IOReactorConfig;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * 简单工厂模式
+ *
  * @author chenglong.yu
  * created on 2020/12/16
  */

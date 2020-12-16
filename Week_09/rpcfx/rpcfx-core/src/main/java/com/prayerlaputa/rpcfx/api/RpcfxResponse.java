@@ -2,7 +2,6 @@ package com.prayerlaputa.rpcfx.api;
 
 import com.prayerlaputa.rpcfx.common.RpcfxException;
 import lombok.Data;
-import lombok.ToString;
 
 @Data
 public class RpcfxResponse {
