@@ -22,9 +22,19 @@
 
     3）设计账户表，冻结资产表，实现上述两个本地事务的分布式事务
 
-  - 没做完，今天空闲时间都在折腾本地环境、maven配置等，心态实在有点爆炸，等后续完善作业吧。本身作业不难，就是用用dubbo而已，就是遇到各种环境问题耽误时间，实在难受。。。。。
+  - 没加dubbo版本：[simple-hmily-tcc-demo](simple-hmily-tcc-demo)
   
-    - 目前已完成了一个没加dubbo的hmily实例，参见[simple-hmily-tcc-demo](simple-hmily-tcc-demo)，将其拆分成dubbo调用即可，dubbo版本参见[dubbo-spring-boot-demo](dubbo-spring-boot-demo)，刚完成api模块，需要写provider时遇到zk无法注册成功的问题，总是报如下错误：
+  - dubbo+hmily版本：[dubbo-spring-boot-demo](dubbo-spring-boot-demo)
+  
+    - 使用zk做注册中心时遇到问题，尝试了多种方式，死活过不去，最后采用了nacos作为dubbo的服务注册中心
+  
+  
+  
+  
+  
+  ### 备注
+  
+  使用zk作为服务注册中心时，总是报如下错误，就连老师提供的dubbo demo（rpcfx02）都报这个错误，基本确定是本地操作系统不对劲，先留下疑问后续再研究吧，否则这个dubbo+hmily作业就耗费两天，有点得不偿失。。。
   
   ```text
   
