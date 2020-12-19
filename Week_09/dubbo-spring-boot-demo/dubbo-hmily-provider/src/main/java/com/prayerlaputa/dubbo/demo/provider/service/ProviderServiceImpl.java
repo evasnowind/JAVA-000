@@ -4,9 +4,9 @@ import com.prayerlaputa.dubbo.demo.entity.Account;
 import com.prayerlaputa.dubbo.demo.mapper.AccountMapper;
 import com.prayerlaputa.dubbo.demo.service.AccountServiceOne;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.config.annotation.Service;
 import org.dromara.hmily.annotation.HmilyTCC;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -14,8 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
  * created on 2020/12/18
  */
 @Slf4j
-@Service("accountServiceOne")
+@Service(version = "${dubbo.provider.AccountServiceOne.version}")
 public class ProviderServiceImpl implements AccountServiceOne {
+
     @Autowired
     private AccountMapper accountMapper;
 

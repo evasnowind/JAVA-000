@@ -7,13 +7,21 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="dubbo-hmily-provider" />
+        <module name="dubbo-hmily-consumer" />
         <module name="dubbo-hmily-api" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="dubbo-hmily-api" target="8" />
-      <module name="dubbo-hmily-provider" target="8" />
+      <module name="dubbo-hmily-consumer" target="1.8" />
+      <module name="dubbo-hmily-provider" target="1.8" />
       <module name="dubbo-spring-boot-demo" target="8" />
     </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="dubbo-hmily-consumer" options="-parameters" />
+      <module name="dubbo-hmily-provider" options="-parameters" />
+    </option>
   </component>
 </project>

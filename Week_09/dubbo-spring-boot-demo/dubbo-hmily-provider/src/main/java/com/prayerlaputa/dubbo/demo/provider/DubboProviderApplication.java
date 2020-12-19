@@ -10,7 +10,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * created on 2020/12/18
  */
 @SpringBootApplication
-@EnableDubbo
 @MapperScan("com.prayerlaputa.dubbo.demo.mapper")
 public class DubboProviderApplication {
 

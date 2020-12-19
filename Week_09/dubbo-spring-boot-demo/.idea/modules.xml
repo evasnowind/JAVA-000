@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/dubbo-hmily-api/dubbo-hmily-api.iml" filepath="$PROJECT_DIR$/dubbo-hmily-api/dubbo-hmily-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dubbo-hmily-consumer/dubbo-hmily-consumer.iml" filepath="$PROJECT_DIR$/dubbo-hmily-consumer/dubbo-hmily-consumer.iml" />
       <module fileurl="file://$PROJECT_DIR$/dubbo-hmily-provider/dubbo-hmily-provider.iml" filepath="$PROJECT_DIR$/dubbo-hmily-provider/dubbo-hmily-provider.iml" />
       <module fileurl="file://$PROJECT_DIR$/dubbo-spring-boot-demo.iml" filepath="$PROJECT_DIR$/dubbo-spring-boot-demo.iml" />
     </modules>

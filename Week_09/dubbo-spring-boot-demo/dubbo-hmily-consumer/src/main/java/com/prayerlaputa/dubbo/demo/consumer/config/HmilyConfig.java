@@ -1,4 +1,4 @@
-package com.prayerlaputa.dubbo.demo.provider.config;
+package com.prayerlaputa.dubbo.demo.consumer.config;
 
 import org.dromara.hmily.spring.annotation.RefererAnnotationBeanPostProcessor;
 import org.springframework.beans.factory.config.BeanPostProcessor;
