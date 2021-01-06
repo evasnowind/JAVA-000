@@ -1,15 +1,3 @@
-## week 11
-
-## 作业
-
-4、（必做）基于Redis封装分布式数据操作： 
-
-1）在Java中实现一个简单的分布式锁； 
-
-2）在Java中实现一个分布式计数器，模拟减库存
-
-
-
 ## 程序说明  
 
 ### 使用jedis实现分布式锁
@@ -33,7 +21,7 @@
 - jedis释放
     - 从JedisPool中获取后，释放Jedis对象时，可以利用try-with-resources的写法，看源码可以看到Jedis实现了Closable接口
     - 注意Closable接口的使用
-
+   
 ### 使用jedis一个分布式计数器  
 
 1. 程序说明
